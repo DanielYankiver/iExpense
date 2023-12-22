@@ -45,7 +45,29 @@ struct ContentView: View {
     NavigationStack {
       List {
         ForEach(expenses.items) { item in
-          Text(item.name)
+          HStack {
+            VStack(alignment: .leading) {
+              Text(item.name)
+                .font(.headline)
+
+              Text(item.type)
+            }
+
+            Spacer()
+
+            let itemAmount = Text(item.amount, format: .currency(code: Locale.current.currency!.identifier))
+
+            if (item.amount < 50) {
+              itemAmount
+                .foregroundColor(.green)
+            } else if (item.amount < 100) {
+              itemAmount
+                .foregroundColor(.yellow)
+            } else {
+              itemAmount
+                .foregroundColor(.red)
+            }
+          }
         }
         .onDelete(perform: removeItems)
       }
